@@ -26,11 +26,13 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // set the position of the player
         _line.SetPosition(0, this.transform.position);
         _line.SetPosition(1, sawTransform.position);
         Vector3 mousePos = _cam.ScreenToWorldPoint(Input.mousePosition);
         _rb.position = new Vector3(mousePos.x,mousePos.y,0);
 
+        // the saw got attracted toward the mouse when mouse click
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Instantiate(particuleForceSaw, sawTransform.position, Quaternion.identity);

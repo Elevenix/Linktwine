@@ -26,6 +26,7 @@ public class MonsterMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // follow the player
         if (canFollow && _target != null)
         {
             this.transform.up = _target.transform.position - this.transform.position;
@@ -33,7 +34,7 @@ public class MonsterMovement : MonoBehaviour
 
         this.transform.Translate(Vector3.up * Time.deltaTime * _speed);
 
-        // si l objet part trop loin on le détruit
+        // if object to far of the game screen
         if(this.transform.position.x < -100 ||
             this.transform.position.x > 100 ||
             this.transform.position.y < -100 ||

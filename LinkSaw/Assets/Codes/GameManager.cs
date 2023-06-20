@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // set the data 
         if (!PlayerPrefs.HasKey("score"))
         {
             PlayerPrefs.SetInt("score", 0);
@@ -76,6 +77,10 @@ public class GameManager : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
+    /// <summary>
+    /// Loop spawn monsters
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator spawnMonsters()
     {
         yield return new WaitForSeconds(1);
@@ -91,6 +96,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loop to change the actual wave
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator delayChangeWave()
     {
         while(_actualWave < waves.Length-1)
@@ -100,6 +109,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Add score and screen shake when score get (when a monster is killed)
+    /// </summary>
+    /// <param name="score"> score get </param>
+    /// <param name="timeShake"> time of shake </param>
+    /// <param name="magnitudeShake"> magnitude of shake </param>
     public void addScore(int score, float timeShake, float magnitudeShake)
     {
         StartCoroutine(Shake(timeShake, magnitudeShake));
@@ -108,6 +123,9 @@ public class GameManager : MonoBehaviour
         scoreText.text = _actualScore.ToString();
     }
 
+    /// <summary>
+    /// Launch the end of the game, when player die
+    /// </summary>
     public void endGame()
     {
         StartCoroutine(delayTransition());
@@ -122,6 +140,10 @@ public class GameManager : MonoBehaviour
         StartCoroutine(Shake(0.2f, 0.5f));
     }
 
+    /// <summary>
+    /// Coroutine of scene transition to reload the level
+    /// </summary>
+    /// <returns></returns>
     IEnumerator delayTransition()
     {
         yield return new WaitForSecondsRealtime(2f);
@@ -131,7 +153,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-    // screen shake (by Brackeys)
+    /// <summary>
+    /// Screen shake method (created by Brackeys)
+    /// </summary>
+    /// <param name="duration"></param>
+    /// <param name="magnitude"></param>
+    /// <returns></returns>
     public IEnumerator Shake(float duration, float magnitude)
     {
         Vector3 originalPos = _mainCamera.transform.localPosition;
@@ -153,6 +180,9 @@ public class GameManager : MonoBehaviour
         _mainCamera.transform.localPosition = originalPos;
     }
 
+    /// <summary>
+    /// When the game start
+    /// </summary>
     public void startGame()
     {
         menu.SetTrigger("start");
@@ -162,6 +192,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(spawnMonsters());
     }
 
+    /// <summary>
+    /// to quit the app
+    /// </summary>
     public void quitApp()
     {
         Application.Quit();
